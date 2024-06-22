@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Alta de Menú</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function crearMenu() {
+            var nombre = document.getElementById('nombre').value;
+            var menu = {
+                nombre: nombre
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/api/menu/crear',
+                contentType: 'application/json',
+                data: JSON.stringify(menu),
+                success: function(response) {
+                    alert('Menú creado correctamente');
+                    window.location.href = '/menu/listar'; // redirige a la lista de menús
+                },
+                error: function(err) {
+                    alert('Error al crear el menú: ' + err.responseText);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h2>Formulario de Alta de Menú</h2>
+    <form onsubmit="event.preventDefault(); crearMenu();">
+        <label for="nombre">Nombre del Menú:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <button type="submit">Crear Menú</button>
+    </form>
+</body>
+</html>
