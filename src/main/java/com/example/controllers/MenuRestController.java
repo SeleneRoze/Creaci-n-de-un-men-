@@ -33,9 +33,19 @@ public class MenuRestController {
     }
     
     @PostMapping
-	public MenuP createBook(@RequestBody MenuP menup) {
+	public MenuP createMenu(@RequestBody MenuP menup) {
 		return menuService.savemenup(menup);
 	}
+@PostMapping("/crear")
+    public ResponseEntity<String> crearMenu(@RequestBody Menu menu) {
+        // Aquí puedes validar y procesar el menú recibido
+        try {
+            menuService.crearMenu(menu); // Llamada al servicio para crear el menú
+            return ResponseEntity.ok("Menú creado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el menú");
+        }
+	    
 	
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMenu(@PathVariable("id") Long id) {
